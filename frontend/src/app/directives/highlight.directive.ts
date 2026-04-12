@@ -16,4 +16,8 @@ export class HighlightDirective implements OnChanges {
       this.r.removeStyle(el, 'border-radius');
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

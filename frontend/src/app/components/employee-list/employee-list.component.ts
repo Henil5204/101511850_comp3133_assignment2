@@ -102,7 +102,11 @@ export class EmployeeListComponent implements OnInit {
     if (dept) {
       this.loading.set(true);
       this.gql.searchByDepartment(dept).subscribe({
+<<<<<<< HEAD
         next: emps => { this.ds.data = emps; this.loading.set(false); },
+=======
+        next: r => { this.ds.data = r; this.loading.set(false); },
+>>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391
         error: () => this.loading.set(false)
       });
     } else {
@@ -117,7 +121,11 @@ export class EmployeeListComponent implements OnInit {
     if (desi) {
       this.loading.set(true);
       this.gql.searchByDesignation(desi).subscribe({
+<<<<<<< HEAD
         next: emps => { this.ds.data = emps; this.loading.set(false); },
+=======
+        next: r => { this.ds.data = r; this.loading.set(false); },
+>>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391
         error: () => this.loading.set(false)
       });
     } else {
@@ -164,4 +172,8 @@ export class EmployeeListComponent implements OnInit {
   view(id: string) { this.router.navigate(['/employees/view', id]); }
   edit(id: string) { this.router.navigate(['/employees/edit', id]); }
   add()            { this.router.navigate(['/employees/add']); }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

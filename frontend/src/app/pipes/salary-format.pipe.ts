@@ -8,4 +8,8 @@ export class SalaryFormatPipe implements PipeTransform {
       style: 'currency', currency: 'CAD', minimumFractionDigits: 0
     }).format(value);
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

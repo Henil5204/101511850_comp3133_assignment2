@@ -7,4 +7,8 @@ export class InitialsPipe implements PipeTransform {
     const l = last?.charAt(0)?.toUpperCase() ?? '';
     return `${f}${l}` || '?';
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

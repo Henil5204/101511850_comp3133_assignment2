@@ -38,4 +38,8 @@ export class AuthService {
     try { const r = localStorage.getItem(this.UK); return r ? JSON.parse(r) : null; }
     catch { return null; }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391
