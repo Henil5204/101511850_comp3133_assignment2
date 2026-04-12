@@ -1,11 +1,18 @@
 <div class="auth-page">
   <div class="auth-card">
-    <div class="auth-logo"><div class="brand-dot"></div><span>EmpTrack</span></div>
+
+    <div class="auth-logo">
+      <div class="brand-logo-lg">
+        <span class="material-icons" style="font-size:18px;color:#0f0f23">hub</span>
+      </div>
+      Emp<span class="brand-accent">Track</span>
+    </div>
+
     <h1>Create account</h1>
-    <p class="auth-sub">Fill in your details to register</p>
+    <p class="auth-sub">Join EmpTrack to manage your team</p>
 
     @if (errorMsg()) {
-      <div class="alert alert-error" style="margin-bottom:16px">
+      <div class="alert alert-error" style="margin-bottom:20px">
         <span class="material-icons-outlined">error_outline</span>{{ errorMsg() }}
       </div>
     }
@@ -13,38 +20,50 @@
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="auth-form">
       <div class="form-group">
         <label class="form-label">Username <span class="req">*</span></label>
-        <input class="form-control" type="text" formControlName="username" placeholder="choose-username">
-        @if (f['username'].touched && f['username'].errors?.['required'])  { <p class="form-error">Username is required</p> }
-        @if (f['username'].touched && f['username'].errors?.['minlength']) { <p class="form-error">Minimum 3 characters</p> }
+        <div class="input-icon-wrap">
+          <span class="icon material-icons-outlined">person</span>
+          <input class="form-control" type="text" formControlName="username" placeholder="choose-username">
+        </div>
+        @if (f['username'].touched && f['username'].errors?.['required'])  { <p class="form-error"><span class="material-icons-outlined">error</span>Username is required</p> }
+        @if (f['username'].touched && f['username'].errors?.['minlength']) { <p class="form-error"><span class="material-icons-outlined">error</span>Minimum 3 characters</p> }
       </div>
 
       <div class="form-group">
         <label class="form-label">Email <span class="req">*</span></label>
-        <input class="form-control" type="email" formControlName="email" placeholder="you@example.com">
-        @if (f['email'].touched && f['email'].errors?.['required']) { <p class="form-error">Email is required</p> }
-        @if (f['email'].touched && f['email'].errors?.['email'])    { <p class="form-error">Enter a valid email</p> }
+        <div class="input-icon-wrap">
+          <span class="icon material-icons-outlined">email</span>
+          <input class="form-control" type="email" formControlName="email" placeholder="you@example.com">
+        </div>
+        @if (f['email'].touched && f['email'].errors?.['required']) { <p class="form-error"><span class="material-icons-outlined">error</span>Email is required</p> }
+        @if (f['email'].touched && f['email'].errors?.['email'])    { <p class="form-error"><span class="material-icons-outlined">error</span>Enter a valid email</p> }
       </div>
 
       <div class="form-group">
         <label class="form-label">Password <span class="req">*</span></label>
         <div class="pw-wrap">
           <span class="icon material-icons-outlined">lock</span>
-          <input class="form-control" [type]="showPw() ? 'text':'password'" formControlName="password" placeholder="Min. 6 characters">
+          <input class="form-control" [type]="showPw() ? 'text':'password'"
+                 formControlName="password" placeholder="Min. 6 characters">
           <button type="button" class="pw-toggle" (click)="showPw.set(!showPw())">
             <span class="material-icons-outlined">{{ showPw() ? 'visibility_off':'visibility' }}</span>
           </button>
         </div>
-        @if (f['password'].touched && f['password'].errors?.['minlength']) { <p class="form-error">Minimum 6 characters</p> }
+        @if (f['password'].touched && f['password'].errors?.['minlength']) { <p class="form-error"><span class="material-icons-outlined">error</span>Minimum 6 characters</p> }
       </div>
 
       <div class="form-group">
         <label class="form-label">Confirm password <span class="req">*</span></label>
-        <input class="form-control" [type]="showPw() ? 'text':'password'" formControlName="confirm" placeholder="Repeat password">
-        @if (f['confirm'].touched && form.errors?.['mismatch']) { <p class="form-error">Passwords do not match</p> }
+        <div class="input-icon-wrap">
+          <span class="icon material-icons-outlined">lock</span>
+          <input class="form-control" [type]="showPw() ? 'text':'password'"
+                 formControlName="confirm" placeholder="Repeat password">
+        </div>
+        @if (f['confirm'].touched && form.errors?.['mismatch']) { <p class="form-error"><span class="material-icons-outlined">error</span>Passwords do not match</p> }
       </div>
 
-      <button type="submit" class="btn-primary btn-full btn-lg" [disabled]="loading()">
-        @if (loading()) { <span class="spinner"></span> } Create account
+      <button type="submit" class="btn-primary btn-full btn-lg" [disabled]="loading()" style="margin-top:4px">
+        @if (loading()) { <span class="spinner"></span> Creating account… }
+        @else { <span class="material-icons-outlined">person_add</span> Create Account }
       </button>
     </form>
 
