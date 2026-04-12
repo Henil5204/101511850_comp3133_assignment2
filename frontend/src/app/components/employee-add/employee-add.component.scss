@@ -1,0 +1,13 @@
+.form-page { max-width: 640px; margin: 0 auto; }
+
+.back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 16px; transition: color var(--t); .material-icons-outlined { font-size: 15px; } &:hover { color: var(--text-primary); } }
+
+.form-card { padding: 24px; }
+
+.form-footer { display: flex; justify-content: flex-end; gap: 8px; padding-top: 20px; margin-top: 4px; border-top: 1px solid var(--border); }
+
+.url-sep { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 0.75rem; margin: 12px 0; &::before, &::after { content: ''; flex: 1; height: 1px; background: var(--border); } }
+
+.photo-preview { position: relative; width: fit-content; margin-bottom: 10px; }
+.photo-thumb   { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); display: block; }
+.photo-remove  { position: absolute; top: -4px; right: -4px; width: 20px; height: 20px; border-radius: 50%; background: var(--red); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; .material-icons { font-size: 12px; } }

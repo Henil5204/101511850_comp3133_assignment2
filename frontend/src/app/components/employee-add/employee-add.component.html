@@ -1,0 +1,140 @@
+<div class="app-shell">
+  <app-navbar></app-navbar>
+  <main class="page-content">
+    <div class="form-page">
+
+      <a routerLink="/employees" class="back-btn">
+        <span class="material-icons-outlined">arrow_back</span> Employees
+      </a>
+
+      <div style="margin-bottom:24px">
+        <h1 class="page-title">Add employee</h1>
+        <p class="page-subtitle">Register a new team member</p>
+      </div>
+
+      <div class="steps">
+        <div class="step" [class.active]="step()===1" [class.done]="step()>1">
+          <div class="step-num">
+            @if(step()>1){<span class="material-icons" style="font-size:12px">check</span>}@else{1}
+          </div>
+          <span>Personal info</span>
+        </div>
+        <div class="step-line" [class.done]="step()>1"></div>
+        <div class="step" [class.active]="step()===2">
+          <div class="step-num">2</div>
+          <span>Work details</span>
+        </div>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="card form-card">
+
+          @if (errorMsg()) {
+            <div class="alert alert-error" style="margin-bottom:20px">
+              <span class="material-icons-outlined">error_outline</span>{{ errorMsg() }}
+            </div>
+          }
+
+          @if (step() === 1) {
+            <p class="section-heading">Personal information</p>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">First name <span class="req">*</span></label>
+                <input class="form-control" type="text" formControlName="first_name" placeholder="John">
+                @if(f['first_name'].touched && f['first_name'].errors?.['required']){<p class="form-error">Required</p>}
+                @if(f['first_name'].touched && f['first_name'].errors?.['minlength']){<p class="form-error">Min. 2 characters</p>}
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last name <span class="req">*</span></label>
+                <input class="form-control" type="text" formControlName="last_name" placeholder="Doe">
+                @if(f['last_name'].touched && f['last_name'].errors?.['required']){<p class="form-error">Required</p>}
+              </div>
+              <div class="form-group col-span-2">
+                <label class="form-label">Email <span class="req">*</span></label>
+                <input class="form-control" type="email" formControlName="email" placeholder="john.doe@company.com">
+                @if(f['email'].touched && f['email'].errors?.['required']){<p class="form-error">Required</p>}
+                @if(f['email'].touched && f['email'].errors?.['email']){<p class="form-error">Enter a valid email</p>}
+              </div>
+              <div class="form-group">
+                <label class="form-label">Gender <span class="req">*</span></label>
+                <select class="form-select" formControlName="gender">
+                  <option value="" disabled>Select gender</option>
+                  @for(g of genders; track g){<option [value]="g">{{ g }}</option>}
+                </select>
+                @if(f['gender'].touched && f['gender'].errors?.['required']){<p class="form-error">Required</p>}
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date of joining <span class="req">*</span></label>
+                <input class="form-control" type="date" formControlName="date_of_joining">
+                @if(f['date_of_joining'].touched && f['date_of_joining'].errors?.['required']){<p class="form-error">Required</p>}
+              </div>
+            </div>
+            <div class="form-footer">
+              <a routerLink="/employees" class="btn-ghost">Cancel</a>
+              <button type="button" class="btn-primary" (click)="goNext()">Continue</button>
+            </div>
+          }
+
+          @if (step() === 2) {
+            <p class="section-heading">Work details</p>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Department <span class="req">*</span></label>
+                <select class="form-select" formControlName="department">
+                  <option value="" disabled>Select department</option>
+                  @for(d of departments; track d){<option [value]="d">{{ d }}</option>}
+                </select>
+                @if(f['department'].touched && f['department'].errors?.['required']){<p class="form-error">Required</p>}
+              </div>
+              <div class="form-group">
+                <label class="form-label">Designation <span class="req">*</span></label>
+                <select class="form-select" formControlName="designation">
+                  <option value="" disabled>Select designation</option>
+                  @for(d of designations; track d){<option [value]="d">{{ d }}</option>}
+                </select>
+                @if(f['designation'].touched && f['designation'].errors?.['required']){<p class="form-error">Required</p>}
+              </div>
+              <div class="form-group col-span-2">
+                <label class="form-label">Annual salary (CAD) <span class="req">*</span></label>
+                <input class="form-control" type="number" formControlName="salary" placeholder="e.g. 75000" min="0">
+                @if(f['salary'].touched && f['salary'].errors?.['required']){<p class="form-error">Required</p>}
+                @if(f['salary'].touched && f['salary'].errors?.['min']){<p class="form-error">Must be positive</p>}
+              </div>
+              <div class="form-group col-span-2">
+                <label class="form-label">Profile photo <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+                @if(photoPreview()){
+                  <div class="photo-preview">
+                    <img [src]="photoPreview()!" alt="Preview" class="photo-thumb">
+                    <button type="button" class="photo-remove" (click)="removePhoto()">
+                      <span class="material-icons">close</span>
+                    </button>
+                  </div>
+                }
+                <div class="upload-area" [class.drag-active]="dragOver()"
+                     (dragover)="$event.preventDefault(); dragOver.set(true)"
+                     (dragleave)="dragOver.set(false)"
+                     (drop)="onDrop($event)">
+                  <input type="file" accept="image/*" (change)="onFileChange($event)">
+                  <span class="material-icons-outlined upload-icon">cloud_upload</span>
+                  <p>Drag & drop or <span style="color:var(--accent)">click to browse</span></p>
+                  <span>PNG, JPG, WEBP up to 5MB</span>
+                </div>
+                <div class="url-sep"><span>or enter URL</span></div>
+                <input class="form-control" type="url" formControlName="employee_photo"
+                       placeholder="https://example.com/photo.jpg"
+                       (input)="photoPreview.set($any($event.target).value || null)">
+              </div>
+            </div>
+            <div class="form-footer">
+              <button type="button" class="btn-ghost" (click)="goBack()">Back</button>
+              <button type="submit" class="btn-primary" [disabled]="loading()">
+                @if(loading()){<span class="spinner"></span>} Save employee
+              </button>
+            </div>
+          }
+
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
