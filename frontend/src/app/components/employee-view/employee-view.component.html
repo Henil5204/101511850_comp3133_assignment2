@@ -1,0 +1,152 @@
+<div class="app-shell">
+  <app-navbar></app-navbar>
+  <main class="page-content">
+    <div class="view-page">
+
+      <a routerLink="/employees" class="back-btn">
+        <span class="material-icons-outlined">arrow_back</span> Employees
+      </a>
+
+      @if(loading()){
+        <div class="card"><div class="loading-state"><div class="spinner spinner-lg"></div>Loading…</div></div>
+      }
+      @if(errorMsg() && !loading()){
+        <div class="alert alert-error"><span class="material-icons-outlined">error_outline</span>{{ errorMsg() }}</div>
+      }
+
+      @if(!loading() && emp()){
+        <div class="view-layout">
+
+          <!-- Identity card -->
+          <aside class="identity-card card">
+            <div class="id-photo-area">
+              @if(emp()?.employee_photo){
+                <img [src]="emp()!.employee_photo!" [alt]="emp()!.first_name" class="id-photo"
+                     (error)="$any($event.target).style.display='none'">
+              }@else{
+                <div class="avatar avatar-xl">{{ emp()!.first_name | initials:emp()!.last_name }}</div>
+              }
+            </div>
+
+            <div class="id-info">
+              <h2 class="id-name">{{ emp()?.first_name }} {{ emp()?.last_name }}</h2>
+              <p class="id-role">{{ emp()?.designation }}</p>
+              <span class="badge badge-blue">{{ emp()?.department }}</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <dl class="id-details">
+              <div class="id-row">
+                <dt>Email</dt>
+                <dd><a [href]="'mailto:'+emp()?.email">{{ emp()?.email }}</a></dd>
+              </div>
+              <div class="id-row">
+                <dt>Gender</dt>
+                <dd>{{ emp()?.gender }}</dd>
+              </div>
+              <div class="id-row">
+                <dt>Joined</dt>
+                <dd>{{ emp()?.date_of_joining | date:'MMM d, yyyy' }}</dd>
+              </div>
+              <div class="id-row">
+                <dt>Tenure</dt>
+                <dd><span class="badge badge-green">{{ tenure() }}</span></dd>
+              </div>
+            </dl>
+
+            <div class="divider"></div>
+
+            <div class="id-actions">
+              <button class="btn-secondary btn-full" (click)="edit()">
+                <span class="material-icons-outlined">edit</span> Edit employee
+              </button>
+              <button class="btn-danger btn-full" (click)="showDeleteModal.set(true)">
+                <span class="material-icons-outlined">delete</span> Delete
+              </button>
+            </div>
+          </aside>
+
+          <!-- Detail panels -->
+          <div class="detail-section">
+
+            <div class="card detail-card">
+              <p class="section-heading">Compensation</p>
+              <p class="salary-display">{{ emp()?.salary | salaryFormat }}</p>
+              <div class="salary-breakdown">
+                <div class="sb-item">
+                  <span class="sb-label">Monthly</span>
+                  <span class="sb-value">{{ monthly() | salaryFormat }}</span>
+                </div>
+                <div class="sb-item">
+                  <span class="sb-label">Bi-weekly</span>
+                  <span class="sb-value">{{ biweekly() | salaryFormat }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card detail-card">
+              <p class="section-heading">Employment</p>
+              <dl class="detail-grid">
+                <div class="detail-row">
+                  <dt>Department</dt>
+                  <dd><span class="badge badge-blue">{{ emp()?.department }}</span></dd>
+                </div>
+                <div class="detail-row">
+                  <dt>Designation</dt>
+                  <dd>{{ emp()?.designation }}</dd>
+                </div>
+                <div class="detail-row">
+                  <dt>Start date</dt>
+                  <dd>{{ emp()?.date_of_joining | date:'MMMM d, yyyy' }}</dd>
+                </div>
+                <div class="detail-row">
+                  <dt>Employee ID</dt>
+                  <dd class="mono text-muted">{{ emp()?._id?.slice(-8)?.toUpperCase() }}</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="card detail-card">
+              <p class="section-heading">Record info</p>
+              <dl class="detail-grid">
+                <div class="detail-row">
+                  <dt>Created</dt>
+                  <dd>{{ (emp()?.created_at | date:'MMM d, yyyy · HH:mm') ?? '—' }}</dd>
+                </div>
+                <div class="detail-row">
+                  <dt>Last updated</dt>
+                  <dd>{{ (emp()?.updated_at | date:'MMM d, yyyy · HH:mm') ?? '—' }}</dd>
+                </div>
+                <div class="detail-row" style="grid-column:1/-1">
+                  <dt>Full ID</dt>
+                  <dd class="mono text-muted" style="font-size:0.6875rem">{{ emp()?._id }}</dd>
+                </div>
+              </dl>
+            </div>
+
+          </div>
+        </div>
+      }
+    </div>
+  </main>
+</div>
+
+@if(showDeleteModal()){
+  <div class="modal-overlay" (click)="showDeleteModal.set(false)">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header"><h3>Delete {{ emp()?.first_name }} {{ emp()?.last_name }}?</h3></div>
+      <div class="modal-body">
+        <p class="text-secondary" style="font-size:0.875rem;line-height:1.6">
+          This action cannot be undone. All data for this employee will be permanently removed.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" (click)="showDeleteModal.set(false)" [disabled]="deleting()">Cancel</button>
+        <button class="btn-danger" (click)="doDelete()" [disabled]="deleting()">
+          @if(deleting()){<span class="spinner"></span>} Delete employee
+        </button>
+      </div>
+    </div>
+  </div>
+}

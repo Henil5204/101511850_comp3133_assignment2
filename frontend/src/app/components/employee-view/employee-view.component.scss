@@ -1,0 +1,27 @@
+.view-page { max-width: 960px; margin: 0 auto; }
+
+.back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 20px; transition: color var(--t); .material-icons-outlined { font-size: 15px; } &:hover { color: var(--text-primary); } }
+
+.view-layout { display: grid; grid-template-columns: 260px 1fr; gap: 16px; align-items: start; }
+@media(max-width:768px){ .view-layout { grid-template-columns: 1fr; } }
+
+.identity-card { padding: 24px; }
+.id-photo-area { display: flex; justify-content: center; margin-bottom: 16px; }
+.id-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+.id-info { text-align: center; }
+.id-name { font-size: 1rem; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; margin-bottom: 3px; }
+.id-role { font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 8px; }
+.id-details { display: flex; flex-direction: column; gap: 10px; }
+.id-row { display: flex; flex-direction: column; gap: 2px; dt { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; } dd { font-size: 0.8125rem; color: var(--text-primary); word-break: break-all; } a { color: var(--accent); } }
+.id-actions { display: flex; flex-direction: column; gap: 6px; }
+
+.detail-section { display: flex; flex-direction: column; gap: 12px; }
+.detail-card { padding: 20px; }
+.salary-display { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.025em; margin-bottom: 12px; }
+.salary-breakdown { display: flex; gap: 24px; }
+.sb-item { display: flex; flex-direction: column; gap: 2px; }
+.sb-label { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.sb-value { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media(max-width:500px){ .detail-grid { grid-template-columns: 1fr; } }
+.detail-row { display: flex; flex-direction: column; gap: 3px; dt { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; } dd { font-size: 0.8125rem; color: var(--text-primary); } }
