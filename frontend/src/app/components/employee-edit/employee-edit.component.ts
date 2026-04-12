@@ -15,7 +15,7 @@ const GENDERS = ['Male','Female','Other'];
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, MatSnackBarModule, NavbarComponent],
   templateUrl: './employee-edit.component.html',
-  styleUrls: ['../employee-add/employee-add.component.scss']
+  styleUrls: ['./employee-edit.component.scss']
 })
 export class EmployeeEditComponent implements OnInit {
   private fb     = inject(FormBuilder);
@@ -53,7 +53,11 @@ export class EmployeeEditComponent implements OnInit {
     this.gql.searchEmployeeById(eid).subscribe({
       next: emp => {
         this.employee.set(emp);
-        this.form.patchValue({ ...emp, date_of_joining: emp.date_of_joining?.split('T')[0] ?? emp.date_of_joining, salary: emp.salary });
+        this.form.patchValue({
+          ...emp,
+          date_of_joining: emp.date_of_joining?.split('T')[0] ?? emp.date_of_joining,
+          salary: emp.salary
+        });
         if (emp.employee_photo) this.photoPreview.set(emp.employee_photo);
         this.loading.set(false);
       },
@@ -65,15 +69,23 @@ export class EmployeeEditComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => { const r = reader.result as string; this.photoPreview.set(r); this.form.patchValue({ employee_photo: r }); };
+    reader.onload = () => {
+      const r = reader.result as string;
+      this.photoPreview.set(r);
+      this.form.patchValue({ employee_photo: r });
+    };
     reader.readAsDataURL(file);
   }
 
-  removePhoto() { this.photoPreview.set(null); this.form.patchValue({ employee_photo: '' }); }
+  removePhoto() {
+    this.photoPreview.set(null);
+    this.form.patchValue({ employee_photo: '' });
+  }
 
   submit() {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    this.saving.set(true); this.errorMsg.set('');
+    this.saving.set(true);
+    this.errorMsg.set('');
     const raw = this.form.value;
     const eid = this.employee()?._id!;
     const updates: Partial<Employee> = {
@@ -88,7 +100,10 @@ export class EmployeeEditComponent implements OnInit {
       employee_photo:  raw.employee_photo  ?? undefined,
     };
     this.gql.updateEmployee(eid, updates).subscribe({
-      next: emp => { this.snack.open(`${emp.first_name} ${emp.last_name} updated`, '', { duration: 3000 }); this.router.navigate(['/employees']); },
+      next: emp => {
+        this.snack.open(`${emp.first_name} ${emp.last_name} updated`, '', { duration: 3000 });
+        this.router.navigate(['/employees']);
+      },
       error: err => { this.saving.set(false); this.errorMsg.set(err.message ?? 'Update failed'); },
       complete: () => this.saving.set(false)
     });
