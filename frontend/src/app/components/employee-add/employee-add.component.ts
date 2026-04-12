@@ -59,34 +59,54 @@ export class EmployeeAddComponent {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => { const r = reader.result as string; this.photoPreview.set(r); this.form.patchValue({ employee_photo: r }); };
+    reader.onload = () => {
+      const r = reader.result as string;
+      this.photoPreview.set(r);
+      this.form.patchValue({ employee_photo: r });
+    };
     reader.readAsDataURL(file);
   }
 
   onDrop(event: DragEvent) {
-    event.preventDefault(); this.dragOver.set(false);
+    event.preventDefault();
+    this.dragOver.set(false);
     const file = event.dataTransfer?.files[0];
     if (file?.type.startsWith('image/')) {
       const reader = new FileReader();
-      reader.onload = () => { const r = reader.result as string; this.photoPreview.set(r); this.form.patchValue({ employee_photo: r }); };
+      reader.onload = () => {
+        const r = reader.result as string;
+        this.photoPreview.set(r);
+        this.form.patchValue({ employee_photo: r });
+      };
       reader.readAsDataURL(file);
     }
   }
 
-  removePhoto() { this.photoPreview.set(null); this.form.patchValue({ employee_photo: '' }); }
+  removePhoto() {
+    this.photoPreview.set(null);
+    this.form.patchValue({ employee_photo: '' });
+  }
 
   submit() {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    this.loading.set(true); this.errorMsg.set('');
+    this.loading.set(true);
+    this.errorMsg.set('');
     const raw = this.form.value;
     this.gql.addEmployee({
-      first_name: raw.first_name!, last_name: raw.last_name!,
-      email: raw.email!, gender: raw.gender as 'Male'|'Female'|'Other',
-      designation: raw.designation!, department: raw.department!,
-      salary: Number(raw.salary), date_of_joining: raw.date_of_joining!,
-      employee_photo: raw.employee_photo || null
+      first_name:      raw.first_name!,
+      last_name:       raw.last_name!,
+      email:           raw.email!,
+      gender:          raw.gender as 'Male' | 'Female' | 'Other',
+      designation:     raw.designation!,
+      department:      raw.department!,
+      salary:          Number(raw.salary),
+      date_of_joining: raw.date_of_joining!,
+      employee_photo:  raw.employee_photo || null
     }).subscribe({
-      next: emp => { this.snack.open(`${emp.first_name} ${emp.last_name} added successfully`, '', { duration: 3000 }); this.router.navigate(['/employees']); },
+      next: emp => {
+        this.snack.open(`${emp.first_name} ${emp.last_name} added successfully`, '', { duration: 3000 });
+        this.router.navigate(['/employees']);
+      },
       error: err => { this.loading.set(false); this.errorMsg.set(err.message ?? 'Failed to add employee'); },
       complete: () => this.loading.set(false)
     });
