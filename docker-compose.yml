@@ -1,0 +1,55 @@
+services:
+
+  mongodb:
+    image: mongo:7.0
+    container_name: emptrack_mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - emptrack_net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  backend:
+    build:
+      context: ./backend
+    container_name: emptrack_backend
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    environment:
+      PORT: 4000
+      MONGODB_URI: mongodb://mongodb:27017/comp3133_assignment2
+      JWT_SECRET: emptrack_secret_101511850
+      JWT_EXPIRES_IN: 7d
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - emptrack_net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: emptrack_frontend
+    restart: unless-stopped
+    ports:
+      - '4200:80'
+    depends_on:
+      - backend
+    networks:
+      - emptrack_net
+
+volumes:
+  mongo_data:
+
+networks:
+  emptrack_net:
+    driver: bridge
