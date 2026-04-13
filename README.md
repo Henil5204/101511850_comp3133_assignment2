@@ -11,9 +11,9 @@
 
 | Service | URL |
 |---|---|
-| Frontend | *Add your Vercel URL here* |
-| Backend API | *Add your Render URL here* |
-| GitHub | *Add your GitHub repo URL here* |
+| Frontend | https://101511850-comp3133-assignment2.vercel.app/login|
+| Backend API | https://one01511850-comp3133-assignment2.onrender.com/graphql |
+| GitHub | https://github.com/Henil5204/101511850_comp3133_assignment2.git |
 
 ---
 
@@ -170,7 +170,7 @@ deleteEmployee(eid: ID!): DeleteResponse!
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/101511850_comp3133_assignment2.git
+git clone https://github.com/Henil5204/101511850_comp3133_assignment2.git
 cd 101511850_comp3133_assignment2
 
 # Start everything
