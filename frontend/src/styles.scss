@@ -460,8 +460,4 @@ a:hover { color: var(--accent-hover); }
 .mono           { font-family: 'SF Mono','Fira Code',monospace; }
 .truncate       { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .w-full         { width: 100%; }
-<<<<<<< HEAD
 @media (max-width: 768px) { .hide-mobile { display: none !important; } }
-=======
-@media (max-width: 768px) { .hide-mobile { display: none !important; } }
->>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

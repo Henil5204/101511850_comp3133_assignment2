@@ -58,8 +58,5 @@ export class EmployeeViewComponent implements OnInit {
       error: err => { this.deleting.set(false); this.showDeleteModal.set(false); this.snack.open(err.message ?? 'Delete failed', '', { duration: 3000 }); }
     });
   }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

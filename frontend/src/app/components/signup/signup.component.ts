@@ -43,20 +43,12 @@ export class SignupComponent {
     this.errorMsg.set('');
     const { username, email, password } = this.form.value;
     this.gql.signup(username!, email!, password!).subscribe({
-<<<<<<< HEAD
       next: res => {
         this.auth.setSession(res.token, res.user);
         this.snack.open(`Welcome, ${res.user.username}!`, '', { duration: 3000 });
       },
-=======
-      next: res => { this.auth.setSession(res.token, res.user); this.snack.open(`Welcome, ${res.user.username}!`, '', { duration: 3000 }); },
->>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391
       error: err => { this.loading.set(false); this.errorMsg.set(err.message ?? 'Registration failed'); },
       complete: () => this.loading.set(false)
     });
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

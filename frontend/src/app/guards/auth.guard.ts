@@ -16,8 +16,4 @@ export const loginGuard: CanActivateFn = () => {
   if (!auth.isAuthenticated()) return true;
   router.navigate(['/employees']);
   return false;
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # EmpTrack — COMP3133 Assignment 2
 
 **Student ID:** 101511850  
@@ -265,7 +264,3 @@ JWT_EXPIRES_IN=7d
 ---
 
 *COMP 3133 · Full Stack Development II · George Brown College · 2026*
-=======
-# 101511850_comp3133_assignment2
-# 101511850_comp3133_assignment2
->>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391

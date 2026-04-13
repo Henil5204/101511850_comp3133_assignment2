@@ -31,8 +31,4 @@ export class TooltipDirective implements OnDestroy {
   private remove() {
     if (this.tip) { this.r.removeChild(document.body, this.tip); this.tip = null; }
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4c8a8b9a6444978bb654de3ea87c66b44c357391
